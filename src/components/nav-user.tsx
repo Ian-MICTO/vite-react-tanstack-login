@@ -18,8 +18,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, CreditCardIcon, BellIcon, LogOutIcon, Link } from "lucide-react"
-import { Button } from "./ui/button"
+import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, CreditCardIcon, BellIcon, LogOutIcon } from "lucide-react"
 import { mockAuthService as auth } from "@/features/auth/services/auth-service"
 import { useNavigate } from "@tanstack/react-router"
 
