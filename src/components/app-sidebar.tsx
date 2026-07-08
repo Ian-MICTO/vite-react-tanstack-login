@@ -13,7 +13,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, TerminalSquareIcon, BotIcon, BookOpenIcon, Settings2Icon, FrameIcon, PieChartIcon, MapIcon } from "lucide-react"
+import { AudioLinesIcon, TerminalIcon, TerminalSquareIcon, BotIcon, BookOpenIcon, Settings2Icon, FrameIcon, PieChartIcon, MapIcon, Monitor } from "lucide-react"
 
 // This is sample data.
 const data = {
@@ -24,9 +24,9 @@ const data = {
   },
   teams: [
     {
-      name: "Acme Inc",
+      name: "Login Test",
       logo: (
-        <GalleryVerticalEndIcon
+        <Monitor
         />
       ),
       plan: "Enterprise",

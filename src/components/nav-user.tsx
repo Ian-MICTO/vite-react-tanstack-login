@@ -18,7 +18,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, CreditCardIcon, BellIcon, LogOutIcon } from "lucide-react"
+import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, CreditCardIcon, BellIcon, LogOutIcon, Link } from "lucide-react"
+import { Button } from "./ui/button"
+import { mockAuthService as auth } from "@/features/auth/services/auth-service"
+import { useNavigate } from "@tanstack/react-router"
 
 export function NavUser({
   user,
@@ -30,6 +33,12 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    auth.logout();
+    navigate({ to: '/login' })
+  }
 
   return (
     <SidebarMenu>
@@ -99,7 +108,9 @@ export function NavUser({
             <DropdownMenuItem>
               <LogOutIcon
               />
-              Log out
+              <button onClick={handleLogout}>
+                Log out
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

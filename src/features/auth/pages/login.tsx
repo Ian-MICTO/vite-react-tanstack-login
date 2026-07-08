@@ -1,108 +1,94 @@
 import { Button } from "@/components/ui/button"
 import {
-    Field,
-    FieldDescription,
-    FieldGroup,
-    FieldLabel,
-    FieldLegend,
-    FieldSeparator,
-    FieldSet,
-} from "@/components/ui/field"
+    Card,
+    CardAction,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
+import { useNavigate } from "@tanstack/react-router"
+import { useState } from "react"
+import { mockAuthService as auth } from "../services/auth-service"
+import { cn } from "@/lib/utils"
 
 export function Login() {
-    return (
-        <div className="w-full max-w-md">
-            <form>
-                <FieldGroup>
-                    <FieldSet>
-                        <FieldLegend>Payment Method</FieldLegend>
-                        <FieldDescription>
-                            All transactions are secure and encrypted
-                        </FieldDescription>
-                        <FieldGroup>
-                            <Field>
-                                <FieldLabel htmlFor="checkout-7j9-card-name-43j">
-                                    Name on Card
-                                </FieldLabel>
-                                <Input
-                                    id="checkout-7j9-card-name-43j"
-                                    placeholder="Evil Rabbit"
-                                    required
-                                />
-                            </Field>
-                            <Field>
-                                <FieldLabel htmlFor="checkout-7j9-card-number-uw1">
-                                    Card Number
-                                </FieldLabel>
-                                <Input
-                                    id="checkout-7j9-card-number-uw1"
-                                    placeholder="1234 5678 9012 3456"
-                                    required
-                                />
-                                <FieldDescription>
-                                    Enter your 16-digit card number
-                                </FieldDescription>
-                            </Field>
-                            <div className="grid grid-cols-3 gap-4">
-                                <Field>
-                                    <FieldLabel htmlFor="checkout-exp-month-ts6">
-                                        Month
-                                    </FieldLabel>
-                                </Field>
-                                <Field>
-                                    <FieldLabel htmlFor="checkout-7j9-exp-year-f59">
-                                        Year
-                                    </FieldLabel>
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-                                </Field>
-                                <Field>
-                                    <FieldLabel htmlFor="checkout-7j9-cvv">CVV</FieldLabel>
-                                    <Input id="checkout-7j9-cvv" placeholder="123" required />
-                                </Field>
-                            </div>
-                        </FieldGroup>
-                    </FieldSet>
-                    <FieldSeparator />
-                    <FieldSet>
-                        <FieldLegend>Billing Address</FieldLegend>
-                        <FieldDescription>
-                            The billing address associated with your payment method
-                        </FieldDescription>
-                        <FieldGroup>
-                            <Field orientation="horizontal">
-                                <FieldLabel
-                                    htmlFor="checkout-7j9-same-as-shipping-wgm"
-                                    className="font-normal"
-                                >
-                                    Same as shipping address
-                                </FieldLabel>
-                            </Field>
-                        </FieldGroup>
-                    </FieldSet>
-                    <FieldSet>
-                        <FieldGroup>
-                            <Field>
-                                <FieldLabel htmlFor="checkout-7j9-optional-comments">
-                                    Comments
-                                </FieldLabel>
-                                <Textarea
-                                    id="checkout-7j9-optional-comments"
-                                    placeholder="Add any additional comments"
-                                    className="resize-none"
+    const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (email === 'test@example.com' && password === 'password') {
+            auth.setAuthenticated(true)
+            setError('')
+            navigate({ to: '/dashboard' })
+            return
+        }
+        setError('Incorrect email and password.')
+    }
+
+    return (
+        <div className="flex min-h-screen items-center justify-center">
+            <Card className="w-full max-w-sm">
+                <CardHeader>
+                    <CardTitle>Login to your account</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <form onSubmit={handleSubmit}>
+                        <div className="flex flex-col gap-6">
+                            <div className="grid gap-2">
+                                <Label htmlFor="email">Email</Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="your@mail.com"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
-                            </Field>
-                        </FieldGroup>
-                    </FieldSet>
-                    <Field orientation="horizontal">
-                        <Button type="submit">Submit</Button>
-                        <Button variant="outline" type="button">
-                            Cancel
-                        </Button>
-                    </Field>
-                </FieldGroup>
-            </form>
+                            </div>
+                            <div className="grid gap-2">
+                                <div className="flex items-center">
+                                    <Label htmlFor="password">Password</Label>
+                                </div>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        {error ? <p className={cn(
+                            "text-xs py-3 text-red-500/80",
+                        )}>{error}</p> : null}
+
+                        {/* <Button
+                            type="submit"
+                            className="w-full"
+                        >
+                            Login
+                        </Button> */}
+                        <button type="submit">
+                            Log in
+                        </button>
+                    </form>
+                </CardContent>
+                {/* <CardFooter className="flex-col gap-2">
+                    <Button
+                        type="submit"
+                        className="w-full"
+                    >
+                        Login
+                    </Button>
+                </CardFooter> */}
+            </Card>
         </div>
     )
 }

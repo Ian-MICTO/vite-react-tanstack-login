@@ -1,7 +1,13 @@
+import { useIsAuthenticated } from '@/features/auth/hooks/use-auth'
 import MainLayout from '@/layouts/main-layout'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_authenticated')({
+  beforeLoad: () => {
+    if (!useIsAuthenticated()) {
+      throw redirect({ to: '/login' })
+    }
+  },
   component: MainLayout,
 })
 
